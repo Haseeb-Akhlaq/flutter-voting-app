@@ -13,9 +13,22 @@ class _SignInScreenState extends State<SignInScreen> {
     try {
       AppUser loggedUser =
           await Provider.of<Auth>(context, listen: false).signInWithGoogle();
-      print(loggedUser.uid);
     } on PlatformException catch (err) {
-      print(err.message);
+      print(
+          '${err.message}----------------------------------------------------------');
+    } catch (err) {
+      print(
+          '${err.toString()}----------------------------------------------------------');
+    }
+  }
+
+  Future<void> _signInWithFacebook() async {
+    try {
+      AppUser loggedUser =
+          await Provider.of<Auth>(context, listen: false).signInWithFacebook();
+    } on PlatformException catch (err) {
+      print(
+          '${err.message}----------------------------------------------------------');
     } catch (err) {
       print(
           '${err.toString()}----------------------------------------------------------');
@@ -32,7 +45,9 @@ class _SignInScreenState extends State<SignInScreen> {
           Container(
             alignment: Alignment.center,
             width: 200,
-            child: Image.asset('assets/loginButton/fbButton.png'),
+            child: GestureDetector(
+                onTap: _signInWithFacebook,
+                child: Image.asset('assets/loginButton/fbButton.png')),
           ),
           Container(
             alignment: Alignment.center,
@@ -44,7 +59,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 AppUser loggedUser =
                     await Provider.of<Auth>(context, listen: false)
                         .signInAnonymously();
-                print(loggedUser.uid);
               },
             ),
           ),
