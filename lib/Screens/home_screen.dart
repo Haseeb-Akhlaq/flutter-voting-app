@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:voting_app/Screens/conductElection/election_main_screen.dart';
 import 'package:voting_app/Screens/profile_screen.dart';
+import 'package:voting_app/providers/new_election_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -74,6 +76,9 @@ class HomeThumbnail extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                final test =
+                    Provider.of<NewElectionProvider>(context, listen: false)
+                        .testCall();
                 Navigator.pushNamed(context, ConductElectionScreen.route);
               },
               child: Container(

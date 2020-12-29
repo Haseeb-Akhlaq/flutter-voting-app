@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:voting_app/auth_class.dart';
+
+import 'file:///C:/Users/Akhlaq%202000/AndroidStudioProjects/voting_app/lib/providers/auth_class.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const route = '/profile_screen';

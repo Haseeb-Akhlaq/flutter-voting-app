@@ -5,19 +5,28 @@ const admin=require('firebase-admin');
 admin.initializeApp();
 
 
-
-exports.newUser=functions.auth.user().onCreate((user)=>{
-   return admin.firestore().collection('users').doc(user.uid).set({
+//On New User Created
+exports.newUser=functions.auth.user().onCreate(async (user)=>{
+   await admin.firestore().collection('users').doc(user.uid).set({
       'userId':user.uid,
       'name':user.displayName,
       'email':user.email,
     })
-    console.log('firestore created');
 });
 
-exports.deleteUser=functions.auth.user().onDelete((user)=>{
+//On User Deleted
+exports.deleteUser=functions.auth.user().onDelete(async (user)=>{
     const doc=admin.firestore().collection('users').doc(user.uid);
 
-    return doc.delete();
+    await doc.delete();
 
 });
+
+//On New Election Created
+exports.onNewElection=functions.firestore.document("/createdPolls/{userId}/onGoingPolls/{electionId}").onCreate( async (snapshot,context)=>{
+    const electionCreated=context.data();
+    const electionId=context.params.electionId;
+    admin.firestore.collection("polls").doc(electionId).set(electionCreated);
+});
+
+

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:voting_app/auth_class.dart';
+
+import 'file:///C:/Users/Akhlaq%202000/AndroidStudioProjects/voting_app/lib/providers/auth_class.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
