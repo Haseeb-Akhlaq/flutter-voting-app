@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'file:///C:/Users/Akhlaq%202000/AndroidStudioProjects/voting_app/lib/providers/auth_class.dart';
+import 'package:voting_app/providers/auth_provider_class.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const route = '/profile_screen';
@@ -16,7 +15,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    currentUser = Provider.of<Auth>(context, listen: false).currentUser();
+    currentUser =
+        Provider.of<AuthProvider>(context, listen: false).currentUser();
   }
 
   @override
@@ -98,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget logoutButton() {
     return GestureDetector(
       onTap: () async {
-        await Provider.of<Auth>(context, listen: false).signOut();
+        await Provider.of<AuthProvider>(context, listen: false).signOut();
         Navigator.of(context).pop();
       },
       child: Container(

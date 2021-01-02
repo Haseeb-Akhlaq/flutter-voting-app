@@ -1,13 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:voting_app/Screens/conductElection/new_candidates_screen.dart';
-import 'package:voting_app/providers/auth_class.dart';
-import 'package:voting_app/providers/new_election_provider.dart';
+import 'package:voting_app/providers/auth_provider_class.dart';
 
 import './Screens/conductElection/election_main_screen.dart';
+import './Screens/conductElection/new_candidates_screen.dart';
 import './Screens/landing_screen.dart';
 import './Screens/profile_screen.dart';
+import './providers/new_election_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,11 +22,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (ctx) => NewElectionProvider(),
+            create: (ctx) => AuthProvider(),
           ),
           ChangeNotifierProvider(
-            create: (ctx) => Auth(),
-          )
+            create: (ctx) => NewElectionProvider(),
+          ),
         ],
         builder: (ctx, child) {
           return MaterialApp(

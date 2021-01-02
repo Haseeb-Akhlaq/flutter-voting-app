@@ -1,7 +1,7 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
-import 'package:voting_app/providers/auth_class.dart';
 
 class Candidate {
   final String name;
@@ -13,7 +13,7 @@ class Candidate {
     this.voteCount = 0,
   });
 
-  factory Candidate.fromDocument(DocumentSnapshot doc) {
+  factory Candidate.fromDocument(doc) {
     return Candidate(
       name: doc['name'],
       picUrl: doc['picUrl'],
@@ -31,6 +31,7 @@ class Election {
   final String description;
   final DateTime startTime;
   final DateTime endTime;
+  final DateTime createdAt;
   List<Candidate> candidates;
 
   Election(
@@ -42,28 +43,29 @@ class Election {
       this.description,
       this.startTime,
       this.endTime,
+      this.createdAt,
       this.candidates});
 
   factory Election.fromDocument(DocumentSnapshot doc) {
+    //print(doc['candidates'][0]['name']);
+
     return Election(
       id: doc['id'],
       title: doc['title'],
       description: doc['description'],
-      startTime: doc['startTime'],
-      endTime: doc['endTime'],
-      candidates:
-          doc['candidates'].map((i) => Candidate.fromDocument(i)).toList(),
+      startTime: doc['startTime'].toDate(),
+      endTime: doc['endTime'].toDate(),
+      createdAt: doc['createdAt'].toDate(),
+      candidates: doc['candidates']
+          .map<Candidate>((i) => Candidate.fromDocument(i))
+          .toList(),
     );
   }
 }
 
 class NewElectionProvider extends ChangeNotifier {
-  String electionId = Uuid().v4();
+  String electionId = (Random().nextInt(9000000) + 1000000).toString();
   Election newElection;
-
-  String testCall() {
-    return 'hello';
-  }
 
   void createNewElectionPart1(String title, String description,
       DateTime startingTime, DateTime endingTime) {
@@ -77,7 +79,7 @@ class NewElectionProvider extends ChangeNotifier {
   }
 
   Future<void> createNewElectionPart2(
-      List<Candidate> candidates, AppUser currentUser) async {
+      List<Candidate> candidates, currentUser) async {
     newElection.candidates = candidates;
 
     List<Map> jsonCadidates = candidates
@@ -102,6 +104,9 @@ class NewElectionProvider extends ChangeNotifier {
       'description': newElection.description,
       'startTime': newElection.startTime,
       'endTime': newElection.endTime,
+      'createdAt': DateTime.now(),
+      'candidates': jsonCadidates,
     });
+    electionId = (Random().nextInt(9000000) + 1000000).toString();
   }
 }

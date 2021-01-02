@@ -24,9 +24,9 @@ exports.deleteUser=functions.auth.user().onDelete(async (user)=>{
 
 //On New Election Created
 exports.onNewElection=functions.firestore.document("/createdPolls/{userId}/onGoingPolls/{electionId}").onCreate( async (snapshot,context)=>{
-    const electionCreated=context.data();
+    const electionCreated=snapshot.data();
     const electionId=context.params.electionId;
-    admin.firestore.collection("polls").doc(electionId).set(electionCreated);
+    admin.firestore().collection("polls").doc(electionId).set(electionCreated);
 });
 
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-import 'file:///C:/Users/Akhlaq%202000/AndroidStudioProjects/voting_app/lib/providers/auth_class.dart';
+import 'package:voting_app/providers/auth_provider_class.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -13,7 +12,8 @@ class _SignInScreenState extends State<SignInScreen> {
   Future<void> _signInWithGoogle() async {
     try {
       AppUser loggedUser =
-          await Provider.of<Auth>(context, listen: false).signInWithGoogle();
+          await Provider.of<AuthProvider>(context, listen: false)
+              .signInWithGoogle();
     } on PlatformException catch (err) {
       print(
           '${err.message}----------------------------------------------------------');
@@ -26,7 +26,8 @@ class _SignInScreenState extends State<SignInScreen> {
   Future<void> _signInWithFacebook() async {
     try {
       AppUser loggedUser =
-          await Provider.of<Auth>(context, listen: false).signInWithFacebook();
+          await Provider.of<AuthProvider>(context, listen: false)
+              .signInWithFacebook();
     } on PlatformException catch (err) {
       print(
           '${err.message}----------------------------------------------------------');
@@ -58,7 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
               color: Colors.greenAccent,
               onPressed: () async {
                 AppUser loggedUser =
-                    await Provider.of<Auth>(context, listen: false)
+                    await Provider.of<AuthProvider>(context, listen: false)
                         .signInAnonymously();
               },
             ),

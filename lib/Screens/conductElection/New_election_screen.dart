@@ -37,7 +37,6 @@ class _NewElectionsScreenState extends State<NewElectionsScreen> {
         text: DateTime.now().subtract(Duration(minutes: 5)).toString());
     _controller2 = TextEditingController(
         text: DateTime.now().add(Duration(days: 1)).toString());
-    // currentUser = Provider.of<Auth>(context, listen: false).currentUser();
   }
 
   @override
@@ -252,10 +251,16 @@ class _NewElectionsScreenState extends State<NewElectionsScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       final nextStep = _saveForm();
                       if (nextStep) {
-                        Navigator.pushNamed(context, NewCandidatesScreen.route);
+                        final electionCreated = await Navigator.pushNamed(
+                            context, NewCandidatesScreen.route);
+                        print(
+                            '$electionCreated------------------------Election created');
+                        if (electionCreated) {
+                          Navigator.of(context).pop(true);
+                        }
                       }
                       return;
                     },

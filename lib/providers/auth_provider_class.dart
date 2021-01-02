@@ -22,14 +22,13 @@ abstract class AuthBase {
   Future<void> signOut();
 }
 
-class Auth extends ChangeNotifier implements AuthBase {
+class AuthProvider extends ChangeNotifier implements AuthBase {
   final _firebaseAuth = FirebaseAuth.instance;
 
   AppUser _userFromFirebase(User firebaseUser) {
     if (firebaseUser == null) {
       return null;
     }
-    print(firebaseUser);
     return AppUser(
         currentUserId: firebaseUser.uid,
         userName: firebaseUser.displayName,

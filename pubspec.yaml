@@ -42,7 +42,7 @@ dependencies:
   firebase_storage: ^5.2.0
   path: ^1.7.0
   toggle_switch: ^0.1.8
-  uuid: ^2.2.2
+  toast: ^0.1.5
 
 
 dev_dependencies:
